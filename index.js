@@ -94,7 +94,7 @@ bot.on('message', function (event) {
             });
         }
         else{
-            self.reply("最好有這個星座! 操!");
+            event.reply("最好有這個星座! 操!");
         }
     }
 
