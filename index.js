@@ -1,5 +1,10 @@
 var linebot = require('linebot');
 var express = require('express');
+const cheerio = require('cheerio')
+var dateFormat = require('dateformat');
+
+
+console.log(dateFormat(new Date(), "yyyy-mm-dd"));
 
 var bot = linebot({
     channelId: '1518123694',
@@ -7,13 +12,22 @@ var bot = linebot({
     channelAccessToken: 'QKCZBLlIhDQhShlwWfO6+ZlrXIjaLxeo/c9+z2lMECIl3/LSD1f4sdQfg/gWPZkIESMmlmS0vKY9YRYxaG2kiOBBKl6gHxXGABs0N6IQEhjOLrenmxRZb49D8z7GbL0Qjgoifx4mQSdQ61QI4kn8swdB04t89/1O/w1cDnyilFU='
 });
 
-function getContent(url, cb){
+// function getContent(url, cb){
+//     var request = require("request");
+//     request(url, function (error, response, body) {
+//         var str = body.toString().replace(/\r\n|\n/g,"").replace(/\s+/g, "");
+//         var match, result = "", regex = /<article>(.*?)<\/article>/ig;
+//         while (match = regex.exec(str)) { result += match[1]; }
+//         cb(result)
+//     });
+// }
+
+function getContent(iAstro, cb){
     var request = require("request");
-    request(url, function (error, response, body) {
-        var str = body.toString().replace(/\r\n|\n/g,"").replace(/\s+/g, "");
-        var match, result = "", regex = /<article>(.*?)<\/article>/ig;
-        while (match = regex.exec(str)) { result += match[1]; }
-        cb(result)
+    const today = dateFormat(new Date(), "yyyy-mm-dd");
+    request("http://astro.click108.com.tw/daily_"+iAstro+".php?iAcDay="+today+"&iAstro="+iAstro+"", function (error, response, body) {
+        const $ = cheerio.load(body);
+        cb($('.TODAY_CONTENT').text())
     });
 }
 
@@ -24,73 +38,73 @@ bot.on('message', function (event) {
         if(event.message.text.indexOf("8363") > -1 && event.message.text.indexOf("座") > -1){
             if(event.message.text.indexOf("牡羊座") > -1){
                 self = event;
-                getContent(baseUrl+"Aries", function(res){
+                getContent(0, function(res){
                     self.reply("牡羊座今日運勢:"+ res);
                 });
             }
             else if(event.message.text.indexOf("金牛座") > -1){
                 self = event;
-                getContent(baseUrl+"Taurus", function(res){
+                getContent(1, function(res){
                     self.reply("金牛座今日運勢:"+ res);
                 });
             }
             else if(event.message.text.indexOf("雙子座") > -1 || event.message.text.indexOf("双子座") > -1){
                 self = event;
-                getContent(baseUrl+"Gemini", function(res){
+                getContent(2, function(res){
                     self.reply("雙子座今日運勢:"+ res);
                 });
             }
             else if(event.message.text.indexOf("巨蠍座") > -1 || event.message.text.indexOf("巨蟹座") > -1){
                 self = event;
-                getContent(baseUrl+"Cancer", function(res){
+                getContent(3, function(res){
                     self.reply("巨蠍座今日運勢:"+ res);
                 });
             }
             else if(event.message.text.indexOf("獅子座") > -1){
                 self = event;
-                getContent(baseUrl+"Leo", function(res){
+                getContent(4, function(res){
                     self.reply("獅子座今日運勢:"+ res);
                 });
             }
             else if(event.message.text.indexOf("處女座") > -1){
                 self = event;
-                getContent(baseUrl+"Virgo", function(res){
+                getContent(5, function(res){
                     self.reply("處女座今日運勢:"+ res);
                 });
             }
             else if(event.message.text.indexOf("天秤座") > -1){
                 self = event;
-                getContent(baseUrl+"Libra", function(res){
+                getContent(6, function(res){
                     self.reply("天秤座今日運勢:"+ res);
                 });
             }
             else if(event.message.text.indexOf("天蠍座") > -1){
                 self = event;
-                getContent(baseUrl+"Scorpio", function(res){
+                getContent(7 function(res){
                     self.reply("天蠍座今日運勢:"+ res);
                 });
             }
             else if(event.message.text.indexOf("射手座") > -1){
                 self = event;
-                getContent(baseUrl+"Sagittarius", function(res){
+                getContent(8, function(res){
                     self.reply("射手座今日運勢:"+ res);
                 });
             }
             else if(event.message.text.indexOf("魔羯座") > -1 || event.message.text.indexOf("摩羯座") > -1){
                 self = event;
-                getContent(baseUrl+"Capricorn", function(res){
+                getContent(9, function(res){
                     self.reply("魔羯座今日運勢:"+ res);
                 });
             }
             else if(event.message.text.indexOf("水瓶座") > -1){
                 self = event;
-                getContent(baseUrl+"Aquarius", function(res){
+                getContent(10, function(res){
                     self.reply("水瓶座今日運勢:"+ res);
                 });
             }
             else if(event.message.text.indexOf("雙魚座") > -1 || event.message.text.indexOf("双魚座") > -1){
                 self = event;
-                getContent(baseUrl+"Pisces", function(res){
+                getContent(11, function(res){
                     self.reply("雙魚座今日運勢:"+ res);
                 });
             }
