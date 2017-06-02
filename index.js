@@ -31,81 +31,80 @@ function getContent(iAstro, cb){
     });
 }
 
-const baseUrl = "http://www.daily-zodiac.com/mobile/zodiac/";
 bot.on('message', function (event) {
     console.log(event); 
     if(event.message.text != null){
         if(event.message.text.indexOf("8363") > -1 && event.message.text.indexOf("座") > -1){
             if(event.message.text.indexOf("牡羊座") > -1){
                 self = event;
-                getContent(0, function(res){
-                    self.reply("牡羊座今日運勢:"+ res);
+                getContent('0', function(res){
+                    self.reply("牡羊座今日運勢: "+ res);
                 });
             }
             else if(event.message.text.indexOf("金牛座") > -1){
                 self = event;
-                getContent(1, function(res){
-                    self.reply("金牛座今日運勢:"+ res);
+                getContent('1', function(res){
+                    self.reply("金牛座今日運勢: "+ res);
                 });
             }
             else if(event.message.text.indexOf("雙子座") > -1 || event.message.text.indexOf("双子座") > -1){
                 self = event;
-                getContent(2, function(res){
-                    self.reply("雙子座今日運勢:"+ res);
+                getContent('2', function(res){
+                    self.reply("雙子座今日運勢: "+ res);
                 });
             }
             else if(event.message.text.indexOf("巨蠍座") > -1 || event.message.text.indexOf("巨蟹座") > -1){
                 self = event;
-                getContent(3, function(res){
-                    self.reply("巨蠍座今日運勢:"+ res);
+                getContent('3', function(res){
+                    self.reply("巨蠍座今日運勢: "+ res);
                 });
             }
             else if(event.message.text.indexOf("獅子座") > -1){
                 self = event;
-                getContent(4, function(res){
-                    self.reply("獅子座今日運勢:"+ res);
+                getContent('4', function(res){
+                    self.reply("獅子座今日運勢: "+ res);
                 });
             }
             else if(event.message.text.indexOf("處女座") > -1){
                 self = event;
-                getContent(5, function(res){
-                    self.reply("處女座今日運勢:"+ res);
+                getContent('5', function(res){
+                    self.reply("處女座今日運勢: "+ res);
                 });
             }
             else if(event.message.text.indexOf("天秤座") > -1){
                 self = event;
-                getContent(6, function(res){
-                    self.reply("天秤座今日運勢:"+ res);
+                getContent('6', function(res){
+                    self.reply("天秤座今日運勢: "+ res);
                 });
             }
             else if(event.message.text.indexOf("天蠍座") > -1){
                 self = event;
-                getContent(7, function(res){
-                    self.reply("天蠍座今日運勢:"+ res);
+                getContent('7', function(res){
+                    self.reply("天蠍座今日運勢: "+ res);
                 });
             }
             else if(event.message.text.indexOf("射手座") > -1){
                 self = event;
-                getContent(8, function(res){
-                    self.reply("射手座今日運勢:"+ res);
+                getContent('8', function(res){
+                    self.reply("射手座今日運勢: "+ res);
                 });
             }
             else if(event.message.text.indexOf("魔羯座") > -1 || event.message.text.indexOf("摩羯座") > -1){
                 self = event;
-                getContent(9, function(res){
-                    self.reply("魔羯座今日運勢:"+ res);
+                getContent('9', function(res){
+                    self.reply("魔羯座今日運勢: "+ res);
                 });
             }
             else if(event.message.text.indexOf("水瓶座") > -1){
                 self = event;
-                getContent(10, function(res){
-                    self.reply("水瓶座今日運勢:"+ res);
+                getContent('10', function(res){
+                    self.reply("水瓶座今日運勢: "+ res);
                 });
             }
             else if(event.message.text.indexOf("雙魚座") > -1 || event.message.text.indexOf("双魚座") > -1){
                 self = event;
-                getContent(11, function(res){
-                    self.reply("雙魚座今日運勢:"+ res);
+                getContent('11', function(res){
+                    self.reply("雙魚座今日運勢: "+ res);
                 });
             }
             else{
