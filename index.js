@@ -24,7 +24,7 @@ function getContent(iAstro, cb){
     const today = moment().tz("Asia/Hong_Kong").format("YYYY-MM-DD");
     request("http://astro.click108.com.tw/daily_"+iAstro+".php?iAcDay="+today+"&iAstro="+iAstro+"", function (error, response, body) {
         const $ = cheerio.load(body);
-        cb(today +" " + $('.TODAY_CONTENT').text().replace(/\r\n|\n/g,"").replace(/\s+/g, "").replace(/解析整體/g,"解析\n整體").replace(/。愛/g,"。\n愛").replace(/。事/g,"。\n事").replace(/。財/g,"。\n財"))
+        cb(today +" " + $('.TODAY_CONTENT').text().replace(/\r\n|\n/g,"").replace(/\s+/g, "").replace(/解析整體/g,"解析\n整體").replace(/。愛|!愛/g,"。\n愛").replace(/。事|!事/g,"。\n事").replace(/。財|!財/g,"。\n財"))
     });
 }
 
