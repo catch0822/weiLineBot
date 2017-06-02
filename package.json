@@ -1,5 +1,5 @@
 {
-  "name": "wei_line_bot",
+  "name": "weilinechat",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,6 +11,6 @@
   "scripts": {
      "start": "node ."
   },
-  "author": "",
+  "author": "WEI CHANG",
   "license": "ISC"
 }
