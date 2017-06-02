@@ -12,6 +12,9 @@ bot.on('message', function (event) {
     if(event.message.text == "安安"){
         event.reply("安你媽?")
     }
+    if(event.message.text.indexOf("涵涵") > -1) {
+        event.reply("83最愛涵涵了 (heart)(heart)(heart)")
+    }
     if(event.message.text.indexOf("大勳") > -1 && event.message.text.indexOf("女朋友") > -1) {
         event.reply("醒醒吧~大勳沒有女朋友")
     }
