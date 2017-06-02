@@ -1,10 +1,7 @@
 var linebot = require('linebot');
 var express = require('express');
 const cheerio = require('cheerio')
-var dateFormat = require('dateformat');
-
-
-console.log(dateFormat(new Date(), "yyyy-mm-dd"));
+var moment = require('moment-timezone');
 
 var bot = linebot({
     channelId: '1518123694',
@@ -24,16 +21,12 @@ var bot = linebot({
 
 function getContent(iAstro, cb){
     var request = require("request");
-    const today = dateFormat(new Date(), "yyyy-mm-dd");
+    const today = moment().tz("Hong Kong").format("YYYY-MM-DD");
     request("http://astro.click108.com.tw/daily_"+iAstro+".php?iAcDay="+today+"&iAstro="+iAstro+"", function (error, response, body) {
         const $ = cheerio.load(body);
-        cb($('.TODAY_CONTENT').text().replace(/\r\n|\n/g,"").replace(/\s+/g, "").replace(/。愛/g,"。\n愛").replace(/。事/g,"。\n事").replace(/。財/g,"。\n財"))
+        cb(today +" " + $('.TODAY_CONTENT').text().replace(/\r\n|\n/g,"").replace(/\s+/g, "").replace(/。愛/g,"。\n愛").replace(/。事/g,"。\n事").replace(/。財/g,"。\n財"))
     });
 }
-
-getContent('1', function(res){
-    console.log(res)
-})
 
 bot.on('message', function (event) {
     console.log(event); 
