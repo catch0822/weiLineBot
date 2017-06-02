@@ -76,7 +76,7 @@ bot.on('message', function (event) {
                     self.reply("射手座今日運勢:"+ res);
                 });
             }
-            else if(event.message.text.indexOf("魔羯座") > -1){
+            else if(event.message.text.indexOf("魔羯座") > -1 || event.message.text.indexOf("摩羯座") > -1){
                 self = event;
                 getContent(baseUrl+"Capricorn", function(res){
                     self.reply("魔羯座今日運勢:"+ res);
@@ -109,7 +109,6 @@ bot.on('message', function (event) {
             event.reply("陳中秋會換女友嗎?")
         }
     }
-
 //   event.reply(event.message.text).then(function (data) {
 //            // success 
         
