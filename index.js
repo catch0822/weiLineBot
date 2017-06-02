@@ -19,7 +19,7 @@ function getContent(url, cb){
 
 bot.on('message', function (event) {
     console.log(event); 
-    if(event.message.text.indexOf("8363")){
+    if(event.message.text.indexOf("8363") > -1){
         if(event.message.text.indexOf("牡羊座") > -1){
             self = event;
             getContent("http://www.daily-zodiac.com/mobile/zodiac/Aries", function(res){
