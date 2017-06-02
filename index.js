@@ -12,16 +12,16 @@ bot.on('message', function (event) {
     if(event.message.text == "安安"){
         event.reply("安你媽?")
     }
-    else if(event.message.text.indexOf("大勳") > -1 && event.message.text.indexOf("女朋友") > -1) {
+    if(event.message.text.indexOf("大勳") > -1 && event.message.text.indexOf("女朋友") > -1) {
         event.reply("醒醒吧~大勳沒有女朋友")
     }
 
-    // event.reply(event.message.text).then(function (data) {
-    //         // success 
+//   event.reply(event.message.text).then(function (data) {
+//            // success 
         
-    //     }).catch(function (error) {
-    //         // error 
-    //     });
+//       }).catch(function (error) {
+//            // error 
+//          });
 });
 
 const app = express();
