@@ -80,7 +80,7 @@ bot.on('message', function (event) {
             }
             else if(event.message.text.indexOf("天蠍座") > -1){
                 self = event;
-                getContent(7 function(res){
+                getContent(7, function(res){
                     self.reply("天蠍座今日運勢:"+ res);
                 });
             }
