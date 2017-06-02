@@ -9,11 +9,17 @@ var bot = linebot({
 
 bot.on('message', function (event) {
     console.log(event); 
-    event.reply(event.message.text).then(function (data) {
-        // success 
-    }).catch(function (error) {
-        // error 
-    });
+    if(event.message.text == "安安"){
+        event.reply("安你媽?")
+    }
+    else{
+        event.reply(event.message.text).then(function (data) {
+            // success 
+        
+        }).catch(function (error) {
+            // error 
+        });
+    }
 });
 
 const app = express();
