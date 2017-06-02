@@ -20,7 +20,11 @@ const app = express();
 const linebotParser = bot.parser();
 app.post('/linewebhook', linebotParser);
 
-var server = app.listen(8080, function() {
+app.get('/', function (req, res) {
+  res.send('Hello World!');
+});
+
+var server = app.listen(process.env.PORT || 8080, function() {
   var port = server.address().port;
   console.log("App now running on port", port);
 });
