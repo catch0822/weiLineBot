@@ -1,6 +1,5 @@
 var linebot = require('linebot');
 var express = require('express');
-var fetchUrl = require("fetch").fetchUrl;
 
 var bot = linebot({
     channelId: '1518123694',
