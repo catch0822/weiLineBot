@@ -11,11 +11,19 @@ function getContent(url, cb){
     var request = require("request");
     request(url, function (error, response, body) {
         var str = body.toString().replace(/\r\n|\n/g,"").replace(/\s+/g, "");
-        var match, result = "", regex = /<article>(.*?)<\/article>/ig;
+        console.log(str)
+        var match, result = "", regex = /<div class="TODAY_CONTENT">(.*?)<\/div>/ig;
+        //, regex = /<article>(.*?)<\/article>/ig;
         while (match = regex.exec(str)) { result += match[1]; }
         cb(result)
     });
+
+
 }
+
+getContent("http://astro.click108.com.tw/daily_10.php?iAstro=10", function(res){
+    console.log(res)
+})
 
 const baseUrl = "http://www.daily-zodiac.com/mobile/zodiac/";
 bot.on('message', function (event) {
@@ -40,7 +48,7 @@ bot.on('message', function (event) {
                     self.reply("雙子座今日運勢:"+ res);
                 });
             }
-            else if(event.message.text.indexOf("巨蠍座") > -1){
+            else if(event.message.text.indexOf("巨蠍座") > -1 || event.message.text.indexOf("巨蟹座") > -1){
                 self = event;
                 getContent(baseUrl+"Cancer", function(res){
                     self.reply("巨蠍座今日運勢:"+ res);
