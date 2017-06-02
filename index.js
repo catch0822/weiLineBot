@@ -27,9 +27,13 @@ function getContent(iAstro, cb){
     const today = dateFormat(new Date(), "yyyy-mm-dd");
     request("http://astro.click108.com.tw/daily_"+iAstro+".php?iAcDay="+today+"&iAstro="+iAstro+"", function (error, response, body) {
         const $ = cheerio.load(body);
-        cb($('.TODAY_CONTENT').text())
+        cb($('.TODAY_CONTENT').text().replace(/\r\n|\n/g,"").replace(/\s+/g, "").replace(/。愛/g,"。\n愛").replace(/。事/g,"。\n事").replace(/。財/g,"。\n財"))
     });
 }
+
+getContent('1', function(res){
+    console.log(res)
+})
 
 bot.on('message', function (event) {
     console.log(event); 
@@ -38,73 +42,73 @@ bot.on('message', function (event) {
             if(event.message.text.indexOf("牡羊座") > -1){
                 self = event;
                 getContent('0', function(res){
-                    self.reply("牡羊座今日運勢: "+ res);
+                    self.reply(res);
                 });
             }
             else if(event.message.text.indexOf("金牛座") > -1){
                 self = event;
                 getContent('1', function(res){
-                    self.reply("金牛座今日運勢: "+ res);
+                    self.reply(res);
                 });
             }
             else if(event.message.text.indexOf("雙子座") > -1 || event.message.text.indexOf("双子座") > -1){
                 self = event;
                 getContent('2', function(res){
-                    self.reply("雙子座今日運勢: "+ res);
+                    self.reply(res);
                 });
             }
             else if(event.message.text.indexOf("巨蠍座") > -1 || event.message.text.indexOf("巨蟹座") > -1){
                 self = event;
                 getContent('3', function(res){
-                    self.reply("巨蠍座今日運勢: "+ res);
+                    self.reply(res);
                 });
             }
             else if(event.message.text.indexOf("獅子座") > -1){
                 self = event;
                 getContent('4', function(res){
-                    self.reply("獅子座今日運勢: "+ res);
+                    self.reply(res);
                 });
             }
             else if(event.message.text.indexOf("處女座") > -1){
                 self = event;
                 getContent('5', function(res){
-                    self.reply("處女座今日運勢: "+ res);
+                    self.reply(res);
                 });
             }
             else if(event.message.text.indexOf("天秤座") > -1){
                 self = event;
                 getContent('6', function(res){
-                    self.reply("天秤座今日運勢: "+ res);
+                    self.reply(res);
                 });
             }
             else if(event.message.text.indexOf("天蠍座") > -1){
                 self = event;
                 getContent('7', function(res){
-                    self.reply("天蠍座今日運勢: "+ res);
+                    self.reply(res);
                 });
             }
             else if(event.message.text.indexOf("射手座") > -1){
                 self = event;
                 getContent('8', function(res){
-                    self.reply("射手座今日運勢: "+ res);
+                    self.reply(res);
                 });
             }
             else if(event.message.text.indexOf("魔羯座") > -1 || event.message.text.indexOf("摩羯座") > -1){
                 self = event;
                 getContent('9', function(res){
-                    self.reply("魔羯座今日運勢: "+ res);
+                    self.reply(res);
                 });
             }
             else if(event.message.text.indexOf("水瓶座") > -1){
                 self = event;
                 getContent('10', function(res){
-                    self.reply("水瓶座今日運勢: "+ res);
+                    self.reply(res);
                 });
             }
             else if(event.message.text.indexOf("雙魚座") > -1 || event.message.text.indexOf("双魚座") > -1){
                 self = event;
                 getContent('11', function(res){
-                    self.reply("雙魚座今日運勢: "+ res);
+                    self.reply(res);
                 });
             }
             else{
