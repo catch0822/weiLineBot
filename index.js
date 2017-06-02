@@ -11,19 +11,11 @@ function getContent(url, cb){
     var request = require("request");
     request(url, function (error, response, body) {
         var str = body.toString().replace(/\r\n|\n/g,"").replace(/\s+/g, "");
-        console.log(str)
-        var match, result = "", regex = /<div class="TODAY_CONTENT">(.*?)<\/div>/ig;
-        //, regex = /<article>(.*?)<\/article>/ig;
+        var match, result = "", regex = /<article>(.*?)<\/article>/ig;
         while (match = regex.exec(str)) { result += match[1]; }
         cb(result)
     });
-
-
 }
-
-getContent("http://astro.click108.com.tw/daily_10.php?iAstro=10", function(res){
-    console.log(res)
-})
 
 const baseUrl = "http://www.daily-zodiac.com/mobile/zodiac/";
 bot.on('message', function (event) {
