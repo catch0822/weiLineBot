@@ -99,6 +99,10 @@ bot.on('message', function (event) {
             }
         }
 
+        if(event.message.text.indexOf("8363") > -1 && event.message.text.indexOf("浩浩") > -1){
+            event.reply("浩浩愛各位美女姨姨❤❤❤❤❤");
+        }
+
         if(event.message.text.indexOf("涵涵") > -1) {
             event.reply("83最愛涵涵了")
         }
