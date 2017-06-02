@@ -5,11 +5,12 @@
   "main": "index.js",
   "dependencies": {
     "express": "^4.15.3",
-    "linebot": "^1.3.0"
+    "linebot": "^1.3.0",
+    "request": "^2.81.0"
   },
   "devDependencies": {},
   "scripts": {
-     "start": "node ."
+    "start": "node ."
   },
   "author": "WEI CHANG",
   "license": "ISC"
