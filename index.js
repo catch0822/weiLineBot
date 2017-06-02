@@ -15,6 +15,9 @@ bot.on('message', function (event) {
     if(event.message.text.indexOf("大勳") > -1 && event.message.text.indexOf("女朋友") > -1) {
         event.reply("醒醒吧~大勳沒有女朋友")
     }
+    if(event.message.text.indexOf("陳") > -1 && event.message.text.indexOf("A尼") > -1) {
+        event.reply("陳中秋會換女友嗎?")
+    }
 
 //   event.reply(event.message.text).then(function (data) {
 //            // success 
