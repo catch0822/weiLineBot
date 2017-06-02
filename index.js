@@ -21,7 +21,7 @@ var bot = linebot({
 
 function getContent(iAstro, cb){
     var request = require("request");
-    const today = moment().tz("Hong Kong").format("YYYY-MM-DD");
+    const today = moment().tz("Asia/Hong_Kong").format("YYYY-MM-DD");
     request("http://astro.click108.com.tw/daily_"+iAstro+".php?iAcDay="+today+"&iAstro="+iAstro+"", function (error, response, body) {
         const $ = cheerio.load(body);
         cb(today +" " + $('.TODAY_CONTENT').text().replace(/\r\n|\n/g,"").replace(/\s+/g, "").replace(/。愛/g,"。\n愛").replace(/。事/g,"。\n事").replace(/。財/g,"。\n財"))
