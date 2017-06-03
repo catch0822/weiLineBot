@@ -4,25 +4,8 @@ const cheerio = require('cheerio')
 var moment = require('moment-timezone');
 var request = require("request");
 var urlencode = require('urlencode');
-var GoogleUrl = require( 'google-url' );
-var constellationObject = {
-    "牡羊座": "0",
-    "金牛座": "1",
-    "雙子座": "2",
-    "双子座": "2",
-    "巨蠍座": "3",
-    "巨蟹座": "3",
-    "獅子座": "4",
-    "處女座": "5",
-    "天秤座": "6",
-    "天蠍座": "7",
-    "射手座": "8",
-    "魔羯座": "9",
-    "摩羯座": "9",
-    "水瓶座": "10",
-    "雙魚座": "11",
-    "双魚座": "11"
-}
+var GoogleUrl = require('google-url');
+var constellationObject = require('./constellation.json');
 
 var googleUrl = new GoogleUrl( { key: 'AIzaSyCYlF1MuSKizf99SSvFmSL1FhCtTteZrCc' });
 
@@ -81,7 +64,7 @@ bot.on('message', function (event) {
             getConstellationFromString(event.message.text, function(constellationName){
                 if(typeof constellationObject[constellationName] !== 'undefined'){
                     self = event;
-                    getContent(constellationObject[event.message.text], function(res){
+                    getContent(constellationObject[self.message.text], function(res){
                         self.reply(res);
                     });
                 }
