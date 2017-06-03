@@ -97,8 +97,8 @@ bot.on('message', function (event) {
                 var lastPageUrl = $("div.btn-group-paging a")[1].attribs.href;
                 var startPager = lastPageUrl.split("index")[1].split(".html")[0];
                 var endPage = startPager - PTT_MOVIE_PAGE_SIZE;
-                while(startPager != endPage){
-                    var url = "https://www.ptt.cc/bbs/movie/index"+ startPager+ ".html";
+                for(var page = startPager; page < endPage; page--){
+                    var url = "https://www.ptt.cc/bbs/movie/index"+ page + ".html";
                     request(url, function (error, response, body) {
                         const $ = cheerio.load(body);
                         pageContentList = $("div.r-ent .title a").toArray()
@@ -107,21 +107,20 @@ bot.on('message', function (event) {
                             if(comment.indexOf(movieName) > -1){
                                 // console.log(comment)
                                 getMovieEvaluation(comment, function(evaluation){
-                                    // console.log(evaluation)
+                                    //console.log(evaluation)
                                     if(evaluation.indexOf("好雷") > -1 ){
                                         movieMap.set("好雷", parseInt(movieMap.get("好雷")) + 1);
                                     }
-                                    else if(evaluation.indexOf("普雷")){
+                                    else if(evaluation.indexOf("普雷") > -1){
                                         movieMap.set("普雷", parseInt(movieMap.get("普雷")) + 1);
                                     }
-                                    else if(evaluation.indexOf("負雷")){
+                                    else if(evaluation.indexOf("負雷") > -1){
                                         movieMap.set("負雷", parseInt(movieMap.get("負雷")) + 1);
                                     }
                                 })
                             }
                         }
                     });
-                    startPager --;
                 }
                 event.reply("=== " + movieName + " ===\n" + "好雷: " + movieMap.get("好雷") + "\n普雷: " + movieMap.get("普雷") + "\n負雷: " + movieMap.get("負雷") )
             });
