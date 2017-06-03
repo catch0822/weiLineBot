@@ -6,11 +6,12 @@ var request = require("request");
 var urlencode = require('urlencode');
 var GoogleUrl = require('google-url');
 var constellationObject = require('./constellation.json');
-
+var HashMap = require('hashmap');
 var googleUrl = new GoogleUrl( { key: 'AIzaSyCYlF1MuSKizf99SSvFmSL1FhCtTteZrCc' });
-
+const PTT_MOVIE_PAGE_SIZE = 300
 const urlRegex =/(\b(https?|http):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 const constellationRegex = /..座/ig;
+const movieEvaluationRegex = /\[(.*?)\]/ig;
 
 var bot = linebot({
     channelId: '1518123694',
@@ -43,7 +44,11 @@ function getConstellationFromString(text, cb) {
     });
 }
 
-var PTT_MOVIE_END_PAGE = 300
+function getMovieEvaluation(text, cb){
+    text.replace(movieEvaluationRegex, function(evaluation) {
+        cb(evaluation);
+    });
+}
 
 function getContent(iAstro, cb){
     const today = moment().tz("Asia/Hong_Kong").format("YYYY-MM-DD");
@@ -79,6 +84,46 @@ bot.on('message', function (event) {
                 shortUrl_google(url, function(shortUrl){
                     self.reply(shortUrl);
                 });
+            });
+        }
+        else if(event.message.text.indexOf("MOVIE") > -1){
+            var movieName = event.message.text.replace("MOVIE", '').trim();
+            var movieMap = new HashMap();
+            movieMap.set("好雷","0");
+            movieMap.set("普雷","0");
+            movieMap.set("負雷","0");
+            request("https://www.ptt.cc/bbs/movie/index.html", function (error, response, body) {
+                const $ = cheerio.load(body);
+                var lastPageUrl = $("div.btn-group-paging a")[1].attribs.href;
+                var startPager = lastPageUrl.split("index")[1].split(".html")[0];
+                var endPage = startPager - PTT_MOVIE_PAGE_SIZE;
+                while(startPager != endPage){
+                    var url = "https://www.ptt.cc/bbs/movie/index"+ startPager+ ".html";
+                    request(url, function (error, response, body) {
+                        const $ = cheerio.load(body);
+                        pageContentList = $("div.r-ent .title a").toArray()
+                        for(var i = 0; i< pageContentList.length ; i++){
+                            var comment = pageContentList[i].children[0].data;
+                            if(comment.indexOf(movieName) > -1){
+                                // console.log(comment)
+                                getMovieEvaluation(comment, function(evaluation){
+                                    // console.log(evaluation)
+                                    if(evaluation.indexOf("好雷")){
+                                        movieMap.set("好雷", parseInt(movieMap.get("好雷")) + 1);
+                                    }
+                                    else if(evaluation.indexOf("普雷")){
+                                        movieMap.set("普雷", parseInt(movieMap.get("普雷")) + 1);
+                                    }
+                                    else if(evaluation.indexOf("負雷")){
+                                        movieMap.set("負雷", parseInt(movieMap.get("負雷")) + 1);
+                                    }
+                                })
+                            }
+                        }
+                    });
+                    startPager --;
+                }
+                event.reply("電影=== " + movieName + " ===\n" + "好雷: " + movieMap.get("好雷") + "\n普雷: " + movieMap.get("普雷") + "\n負雷: " + movieMap.get("負雷") )
             });
         }
         else if(event.message.text.indexOf("涵涵") > -1) {
