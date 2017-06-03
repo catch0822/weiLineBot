@@ -108,7 +108,7 @@ bot.on('message', function (event) {
                                 // console.log(comment)
                                 getMovieEvaluation(comment, function(evaluation){
                                     // console.log(evaluation)
-                                    if(evaluation.indexOf("好雷")){
+                                    if(evaluation.indexOf("好雷") > -1 ){
                                         movieMap.set("好雷", parseInt(movieMap.get("好雷")) + 1);
                                     }
                                     else if(evaluation.indexOf("普雷")){
@@ -123,7 +123,7 @@ bot.on('message', function (event) {
                     });
                     startPager --;
                 }
-                event.reply("電影=== " + movieName + " ===\n" + "好雷: " + movieMap.get("好雷") + "\n普雷: " + movieMap.get("普雷") + "\n負雷: " + movieMap.get("負雷") )
+                event.reply("=== " + movieName + " ===\n" + "好雷: " + movieMap.get("好雷") + "\n普雷: " + movieMap.get("普雷") + "\n負雷: " + movieMap.get("負雷") )
             });
         }
         else if(event.message.text.indexOf("涵涵") > -1) {
