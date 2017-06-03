@@ -3,6 +3,7 @@ var express = require('express');
 const cheerio = require('cheerio')
 var moment = require('moment-timezone');
 var request = require("request");
+var urlencode = require('urlencode');
 const urlRegex =/(\b(https?|http):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 
 var bot = linebot({
@@ -12,7 +13,8 @@ var bot = linebot({
 });
 
 function shortUrl(url, cb){
-    request("http://0rz.tw/create?url="+encodeURI(url), function (error, response, body) {
+    console.log("ENCODE: "+urlencode(url))
+    request("http://0rz.tw/create?url="+urlencode(url), function (error, response, body) {
         const $ = cheerio.load(body);
         cb($("div#doneurl a").text().split("複製")[1]);
     });
@@ -31,6 +33,16 @@ function getContent(iAstro, cb){
         cb(today +" " + $('.TODAY_CONTENT').text().replace(/\r\n|\n/g,"").replace(/\s+/g, "").replace(/解析整體/g,"解析\n整體").replace(/。愛|！愛/g,"。\n愛").replace(/。事|！事/g,"。\n事").replace(/。財|！財/g,"。\n財"))
     });
 }
+
+var t = "幫縮 https://mail.google.com/mail/u/0/?hl=zh-TW&shva=1#inbox"
+if(t.match(urlRegex)){
+    getUrlFromString(t, function(url){
+        shortUrl(url, function(sUrl){
+           console.log(sUrl)
+        });
+    });
+}
+   
 
 bot.on('message', function (event) {
     console.log(event); 
