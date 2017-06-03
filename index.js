@@ -113,7 +113,7 @@ bot.on('message', function (event) {
             }
         }
       
-        if(event.message.text.indexOf("縮") > -1 && event.message.text.match(urlRegex) != null){
+        if(event.message.text.indexOf("縮") > -1 && event.message.text.match(urlRegex)){
             self = event;
             getUrlFromString(event.message.text, function(url){
                 shortUrl(url, function(shortUrl){
