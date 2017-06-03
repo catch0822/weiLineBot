@@ -41,16 +41,6 @@ function getContent(iAstro, cb){
     });
 }
 
-// var t = "幫縮 https://www.facebook.com/lin.nain?fref=ts"
-// if(t.match(urlRegex)){
-//     console.log("MATCH")
-//     getUrlFromString(t, function(url){
-//         shortUrl_google(url, function(sUrl){
-//            console.log(sUrl)
-//         });
-//     });
-// }
-
 bot.on('message', function (event) {
     console.log(event); 
     if(event.message.text != null){
@@ -141,8 +131,10 @@ bot.on('message', function (event) {
             });
         }
 
-        if(event.message.text.indexOf("8363") > -1 && event.message.text.indexOf("浩浩") > -1){
-            event.reply("浩浩愛各位美女姨姨❤❤❤❤❤");
+        if(event.message.text.indexOf("浩浩") > -1 && event.message.text.indexOf("喜歡") > -1){
+            event.source.profile().then(function (profile) {
+                event.reply("浩浩也喜歡"+profile.displayName+"❤❤❤❤❤❤");
+            });
         }
 
         if(event.message.text.indexOf("涵涵") > -1) {
