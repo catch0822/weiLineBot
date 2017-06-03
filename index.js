@@ -8,7 +8,7 @@ var GoogleUrl = require('google-url');
 var constellationObject = require('./constellation.json');
 var HashMap = require('hashmap');
 var googleUrl = new GoogleUrl( { key: 'AIzaSyCYlF1MuSKizf99SSvFmSL1FhCtTteZrCc' });
-const PTT_MOVIE_PAGE_SIZE = 300
+const PTT_MOVIE_PAGE_SIZE = 50
 const urlRegex =/(\b(https?|http):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 const constellationRegex = /..座/ig;
 const movieEvaluationRegex = /\[(.*?)\]/ig;
@@ -97,7 +97,8 @@ bot.on('message', function (event) {
                 var lastPageUrl = $("div.btn-group-paging a")[1].attribs.href;
                 var startPager = lastPageUrl.split("index")[1].split(".html")[0];
                 var endPage = startPager - PTT_MOVIE_PAGE_SIZE;
-                for(var page = startPager; page <= endPage; page--){
+                for(var i = 0 ; i < PTT_MOVIE_PAGE_SIZE ; i++){
+                    var page = startPager - i;
                     var url = "https://www.ptt.cc/bbs/movie/index"+ page + ".html";
                     request(url, function (error, response, body) {
                         const $ = cheerio.load(body);
@@ -121,7 +122,7 @@ bot.on('message', function (event) {
                             }
                         }
                     });
-                    if(page == endPage){
+                    if(i == (PTT_MOVIE_PAGE_SIZE -1)){
                         event.reply("=== " + movieName + " ===\n" + "好雷: " + movieMap.get("好雷") + "\n普雷: " + movieMap.get("普雷") + "\n負雷: " + movieMap.get("負雷") )
                     }
                 }
