@@ -7,11 +7,18 @@ var urlencode = require('urlencode');
 var GoogleUrl = require( 'google-url' );
 var constellationObject = require('./constellation.json');
 
-var x = "牡羊"
-console.log(typeof constellationObject[x] !== 'undefined')
+
+
 
 googleUrl = new GoogleUrl( { key: 'AIzaSyCYlF1MuSKizf99SSvFmSL1FhCtTteZrCc' });
 const urlRegex =/(\b(https?|http):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+const constellationRegex = /..座/ig;
+
+function getConstellationFromString(text, cb) {
+    text.replace(constellationRegex, function(res) {
+        cb(res);
+    });
+}
 
 var bot = linebot({
     channelId: '1518123694',
@@ -53,15 +60,17 @@ bot.on('message', function (event) {
     if(event.message.text != null){
         console.log(event.message.text)
         if(event.message.text.indexOf("8363") > -1 && event.message.text.indexOf("座") > -1){
-            if(typeof constellationObject[event.message.text] !== 'undefined'){
-                self = event;
-                getContent(constellationObject[event.message.text], function(res){
-                    self.reply(res);
-                });
-            }
-            else{
-                event.reply("最好有這個星座! 操!");
-            }
+            getConstellationFromString(event.message.text, function(constellationName){
+                if(typeof constellationObject[constellationName] !== 'undefined'){
+                    self = event;
+                    getContent(constellationObject[event.message.text], function(res){
+                        self.reply(res);
+                    });
+                }
+                else{
+                    event.reply("最好有這個星座! 操!");
+                }
+            });
         }
       
         if(event.message.text.indexOf("縮") > -1 && event.message.text.match(urlRegex)){
