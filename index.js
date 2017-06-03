@@ -64,7 +64,7 @@ bot.on('message', function (event) {
             getConstellationFromString(event.message.text, function(constellationName){
                 if(typeof constellationObject[constellationName] !== 'undefined'){
                     self = event;
-                    getContent(constellationObject[self.message.text], function(res){
+                    getContent(constellationObject[constellationName], function(res){
                         self.reply(res);
                     });
                 }
