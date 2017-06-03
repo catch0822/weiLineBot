@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "async": "^2.4.1",
     "cheerio": "^1.0.0-rc.1",
     "configstore": "^3.1.0",
     "express": "^4.15.3",
@@ -13,6 +14,7 @@
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "request": "^2.81.0",
+    "serial-loop": "^3.0.0",
     "urlencode": "^1.1.0"
   },
   "devDependencies": {},
