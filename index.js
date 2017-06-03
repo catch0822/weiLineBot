@@ -2,6 +2,8 @@ var linebot = require('linebot');
 var express = require('express');
 const cheerio = require('cheerio')
 var moment = require('moment-timezone');
+var request = require("request");
+const urlRegex =/(\b(https?|http):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 
 var bot = linebot({
     channelId: '1518123694',
@@ -9,18 +11,21 @@ var bot = linebot({
     channelAccessToken: 'QKCZBLlIhDQhShlwWfO6+ZlrXIjaLxeo/c9+z2lMECIl3/LSD1f4sdQfg/gWPZkIESMmlmS0vKY9YRYxaG2kiOBBKl6gHxXGABs0N6IQEhjOLrenmxRZb49D8z7GbL0Qjgoifx4mQSdQ61QI4kn8swdB04t89/1O/w1cDnyilFU='
 });
 
-// function getContent(url, cb){
-//     var request = require("request");
-//     request(url, function (error, response, body) {
-//         var str = body.toString().replace(/\r\n|\n/g,"").replace(/\s+/g, "");
-//         var match, result = "", regex = /<article>(.*?)<\/article>/ig;
-//         while (match = regex.exec(str)) { result += match[1]; }
-//         cb(result)
-//     });
-// }
+function shortUrl(url, cb){
+    request("http://0rz.tw/create?url="+encodeURI(url), function (error, response, body) {
+        const $ = cheerio.load(body);
+        cb($("div#doneurl a").text().split("複製")[1]);
+    });
+}
+
+function getUrlFromString(text, cb) {
+    text.replace(urlRegex, function(url) {
+        cb(url);
+    });
+}
 
 function getContent(iAstro, cb){
-    var request = require("request");
+
     const today = moment().tz("Asia/Hong_Kong").format("YYYY-MM-DD");
     request("http://astro.click108.com.tw/daily_"+iAstro+".php?iAcDay="+today+"&iAstro="+iAstro+"", function (error, response, body) {
         const $ = cheerio.load(body);
@@ -107,6 +112,15 @@ bot.on('message', function (event) {
             else{
                 event.reply("最好有這個星座! 操!");
             }
+        }
+      
+        if(event.message.text.indexOf("縮") > -1 && event.message.text.match(urlRegex) != null){
+            self = event;
+            getUrlFromString(str, function(url){
+                shortUrl(url, function(shortUrl){
+                    self.reply(shortUrl);
+                });
+            });
         }
 
         if(event.message.text.indexOf("8363") > -1 && event.message.text.indexOf("浩浩") > -1){
