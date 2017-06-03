@@ -5,6 +5,11 @@ var moment = require('moment-timezone');
 var request = require("request");
 var urlencode = require('urlencode');
 var GoogleUrl = require( 'google-url' );
+var constellationObject = require('./constellation.json');
+
+var x = "牡羊"
+console.log(typeof constellationObject[x] !== 'undefined')
+
 googleUrl = new GoogleUrl( { key: 'AIzaSyCYlF1MuSKizf99SSvFmSL1FhCtTteZrCc' });
 const urlRegex =/(\b(https?|http):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 
@@ -33,6 +38,8 @@ function getUrlFromString(text, cb) {
     });
 }
 
+var PTT_MOVIE_END_PAGE = 300
+
 function getContent(iAstro, cb){
     const today = moment().tz("Asia/Hong_Kong").format("YYYY-MM-DD");
     request("http://astro.click108.com.tw/daily_"+iAstro+".php?iAcDay="+today+"&iAstro="+iAstro+"", function (error, response, body) {
@@ -46,75 +53,9 @@ bot.on('message', function (event) {
     if(event.message.text != null){
         console.log(event.message.text)
         if(event.message.text.indexOf("8363") > -1 && event.message.text.indexOf("座") > -1){
-            if(event.message.text.indexOf("牡羊座") > -1){
+            if(typeof constellationObject[event.message.text] !== 'undefined'){
                 self = event;
-                getContent('0', function(res){
-                    self.reply(res);
-                });
-            }
-            else if(event.message.text.indexOf("金牛座") > -1){
-                self = event;
-                getContent('1', function(res){
-                    self.reply(res);
-                });
-            }
-            else if(event.message.text.indexOf("雙子座") > -1 || event.message.text.indexOf("双子座") > -1){
-                self = event;
-                getContent('2', function(res){
-                    self.reply(res);
-                });
-            }
-            else if(event.message.text.indexOf("巨蠍座") > -1 || event.message.text.indexOf("巨蟹座") > -1){
-                self = event;
-                getContent('3', function(res){
-                    self.reply(res);
-                });
-            }
-            else if(event.message.text.indexOf("獅子座") > -1){
-                self = event;
-                getContent('4', function(res){
-                    self.reply(res);
-                });
-            }
-            else if(event.message.text.indexOf("處女座") > -1){
-                self = event;
-                getContent('5', function(res){
-                    self.reply(res);
-                });
-            }
-            else if(event.message.text.indexOf("天秤座") > -1){
-                self = event;
-                getContent('6', function(res){
-                    self.reply(res);
-                });
-            }
-            else if(event.message.text.indexOf("天蠍座") > -1){
-                self = event;
-                getContent('7', function(res){
-                    self.reply(res);
-                });
-            }
-            else if(event.message.text.indexOf("射手座") > -1){
-                self = event;
-                getContent('8', function(res){
-                    self.reply(res);
-                });
-            }
-            else if(event.message.text.indexOf("魔羯座") > -1 || event.message.text.indexOf("摩羯座") > -1){
-                self = event;
-                getContent('9', function(res){
-                    self.reply(res);
-                });
-            }
-            else if(event.message.text.indexOf("水瓶座") > -1){
-                self = event;
-                getContent('10', function(res){
-                    self.reply(res);
-                });
-            }
-            else if(event.message.text.indexOf("雙魚座") > -1 || event.message.text.indexOf("双魚座") > -1){
-                self = event;
-                getContent('11', function(res){
+                getContent(constellationObject[event.message.text], function(res){
                     self.reply(res);
                 });
             }
