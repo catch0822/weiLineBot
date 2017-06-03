@@ -97,7 +97,7 @@ bot.on('message', function (event) {
                 var lastPageUrl = $("div.btn-group-paging a")[1].attribs.href;
                 var startPager = lastPageUrl.split("index")[1].split(".html")[0];
                 var endPage = startPager - PTT_MOVIE_PAGE_SIZE;
-                for(var page = startPager; page < endPage; page--){
+                for(var page = startPager; page <= endPage; page--){
                     var url = "https://www.ptt.cc/bbs/movie/index"+ page + ".html";
                     request(url, function (error, response, body) {
                         const $ = cheerio.load(body);
@@ -121,8 +121,10 @@ bot.on('message', function (event) {
                             }
                         }
                     });
+                    if(page == endPage){
+                        event.reply("=== " + movieName + " ===\n" + "好雷: " + movieMap.get("好雷") + "\n普雷: " + movieMap.get("普雷") + "\n負雷: " + movieMap.get("負雷") )
+                    }
                 }
-                event.reply("=== " + movieName + " ===\n" + "好雷: " + movieMap.get("好雷") + "\n普雷: " + movieMap.get("普雷") + "\n負雷: " + movieMap.get("負雷") )
             });
         }
         else if(event.message.text.indexOf("涵涵") > -1) {
