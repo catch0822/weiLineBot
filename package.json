@@ -6,6 +6,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.1",
     "express": "^4.15.3",
+    "google-url": "0.0.4",
     "linebot": "^1.3.0",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",

@@ -4,6 +4,8 @@ const cheerio = require('cheerio')
 var moment = require('moment-timezone');
 var request = require("request");
 var urlencode = require('urlencode');
+var GoogleUrl = require( 'google-url' );
+googleUrl = new GoogleUrl( { key: 'AIzaSyCYlF1MuSKizf99SSvFmSL1FhCtTteZrCc' });
 const urlRegex =/(\b(https?|http):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 
 var bot = linebot({
@@ -12,11 +14,16 @@ var bot = linebot({
     channelAccessToken: 'QKCZBLlIhDQhShlwWfO6+ZlrXIjaLxeo/c9+z2lMECIl3/LSD1f4sdQfg/gWPZkIESMmlmS0vKY9YRYxaG2kiOBBKl6gHxXGABs0N6IQEhjOLrenmxRZb49D8z7GbL0Qjgoifx4mQSdQ61QI4kn8swdB04t89/1O/w1cDnyilFU='
 });
 
-function shortUrl(url, cb){
-    console.log("ENCODE: "+urlencode(url))
+function shortUrl_0rz(url, cb){
     request("http://0rz.tw/create?url="+urlencode(url), function (error, response, body) {
         const $ = cheerio.load(body);
         cb($("div#doneurl a").text().split("複製")[1]);
+    });
+}
+
+function shortUrl_google(url, cb){
+    googleUrl.shorten(url, function(err, shortUrl) {
+      cb(shortUrl)
     });
 }
 
@@ -34,15 +41,15 @@ function getContent(iAstro, cb){
     });
 }
 
-var t = "幫縮 https://mail.google.com/mail/u/0/?hl=zh-TW&shva=1#inbox"
-if(t.match(urlRegex)){
-    getUrlFromString(t, function(url){
-        shortUrl(url, function(sUrl){
-           console.log(sUrl)
-        });
-    });
-}
-   
+// var t = "幫縮 https://www.facebook.com/lin.nain?fref=ts"
+// if(t.match(urlRegex)){
+//     console.log("MATCH")
+//     getUrlFromString(t, function(url){
+//         shortUrl_google(url, function(sUrl){
+//            console.log(sUrl)
+//         });
+//     });
+// }
 
 bot.on('message', function (event) {
     console.log(event); 
@@ -128,7 +135,7 @@ bot.on('message', function (event) {
         if(event.message.text.indexOf("縮") > -1 && event.message.text.match(urlRegex)){
             self = event;
             getUrlFromString(event.message.text, function(url){
-                shortUrl(url, function(shortUrl){
+                shortUrl_google(url, function(shortUrl){
                     self.reply(shortUrl);
                 });
             });
