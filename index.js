@@ -10,7 +10,7 @@ var HashMap = require('hashmap');
 var async = require('async');
 var loop = require('serial-loop')
 var googleUrl = new GoogleUrl( { key: 'AIzaSyCYlF1MuSKizf99SSvFmSL1FhCtTteZrCc' });
-const PTT_MOVIE_PAGE_SIZE = 200
+const PTT_MOVIE_PAGE_SIZE = 20
 const urlRegex =/(\b(https?|http):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 const constellationRegex = /..座/ig;
 const movieEvaluationRegex = /\[(.*?)\]/ig;
@@ -60,9 +60,6 @@ function getContent(iAstro, cb){
     });
 }
 
-var movieName = "神力女超人"
-
-
 bot.on('message', function (event) {
     // console.log(event); 
     if(event.message.text != null){
@@ -91,8 +88,8 @@ bot.on('message', function (event) {
                 });
             });
         }
-        else if(event.message.text.indexOf("8363M") > -1){
-            var movieName = event.message.text.replace("8363M", '').trim();
+        else if(event.message.text.indexOf("雷雷") > -1){
+            var movieName = event.message.text.replace("雷雷", '').trim();
             var movieMap = new HashMap();
             var LEVEL_1 = 0; //好
             var LEVEL_2 = 0; //普
