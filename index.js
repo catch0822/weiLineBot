@@ -10,7 +10,7 @@ var HashMap = require('hashmap');
 var async = require('async');
 var loop = require('serial-loop')
 var googleUrl = new GoogleUrl( { key: 'AIzaSyCYlF1MuSKizf99SSvFmSL1FhCtTteZrCc' });
-const PTT_MOVIE_PAGE_SIZE = 100
+const PTT_MOVIE_PAGE_SIZE = 60
 const urlRegex =/(\b(https?|http):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 const constellationRegex = /..座/ig;
 const movieEvaluationRegex = /\[(.*?)\]/ig;
