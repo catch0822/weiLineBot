@@ -25,7 +25,6 @@ function getUrlFromString(text, cb) {
 }
 
 function getContent(iAstro, cb){
-
     const today = moment().tz("Asia/Hong_Kong").format("YYYY-MM-DD");
     request("http://astro.click108.com.tw/daily_"+iAstro+".php?iAcDay="+today+"&iAstro="+iAstro+"", function (error, response, body) {
         const $ = cheerio.load(body);
@@ -116,7 +115,7 @@ bot.on('message', function (event) {
       
         if(event.message.text.indexOf("縮") > -1 && event.message.text.match(urlRegex) != null){
             self = event;
-            getUrlFromString(str, function(url){
+            getUrlFromString(event.message.text, function(url){
                 shortUrl(url, function(shortUrl){
                     self.reply(shortUrl);
                 });
