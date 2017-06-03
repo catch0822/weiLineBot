@@ -131,12 +131,6 @@ bot.on('message', function (event) {
             });
         }
 
-        if(event.message.text.indexOf("浩浩") > -1 && event.message.text.indexOf("喜歡") > -1){
-            event.source.profile().then(function (profile) {
-                event.reply("浩浩也喜歡"+profile.displayName+"❤❤");
-            });
-        }
-
         if(event.message.text.indexOf("涵涵") > -1) {
             event.reply("83最愛涵涵了")
         }
@@ -145,6 +139,11 @@ bot.on('message', function (event) {
         }
         if(event.message.text.indexOf("陳") > -1 && (event.message.text.indexOf("A尼") > -1 || event.message.text.indexOf("a尼") > -1)) {
             event.reply("陳中秋會換女友嗎?")
+        }
+        if(event.message.text.indexOf("浩浩") > -1 && event.message.text.indexOf("喜歡") > -1){
+            event.source.profile().then(function (profile) {
+                event.reply("浩浩也喜歡 "+ profile.displayName +"❤❤");
+            });
         }
     }
 //   event.reply(event.message.text).then(function (data) {
