@@ -133,7 +133,7 @@ bot.on('message', function (event) {
 
         if(event.message.text.indexOf("浩浩") > -1 && event.message.text.indexOf("喜歡") > -1){
             event.source.profile().then(function (profile) {
-                event.reply("浩浩也喜歡"+profile.displayName+"❤❤❤❤❤❤");
+                event.reply("浩浩也喜歡"+profile.displayName+"❤❤");
             });
         }
 
