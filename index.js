@@ -7,18 +7,10 @@ var urlencode = require('urlencode');
 var GoogleUrl = require( 'google-url' );
 var constellationObject = require('./constellation.json');
 
-
-
-
 googleUrl = new GoogleUrl( { key: 'AIzaSyCYlF1MuSKizf99SSvFmSL1FhCtTteZrCc' });
+
 const urlRegex =/(\b(https?|http):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 const constellationRegex = /..座/ig;
-
-function getConstellationFromString(text, cb) {
-    text.replace(constellationRegex, function(res) {
-        cb(res);
-    });
-}
 
 var bot = linebot({
     channelId: '1518123694',
@@ -45,6 +37,12 @@ function getUrlFromString(text, cb) {
     });
 }
 
+function getConstellationFromString(text, cb) {
+    text.replace(constellationRegex, function(res) {
+        cb(res);
+    });
+}
+
 var PTT_MOVIE_END_PAGE = 300
 
 function getContent(iAstro, cb){
@@ -59,7 +57,10 @@ bot.on('message', function (event) {
     // console.log(event); 
     if(event.message.text != null){
         console.log(event.message.text)
-        if(event.message.text.indexOf("8363") > -1 && event.message.text.indexOf("座") > -1){
+        if(event.message.text.indexOf("大勳") > -1 && event.message.text.indexOf("女朋友") > -1) {
+            event.reply("醒醒吧~大勳沒有女朋友")
+        }
+        else if(event.message.text.indexOf("8363") > -1 && event.message.text.indexOf("座") > -1){
             getConstellationFromString(event.message.text, function(constellationName){
                 if(typeof constellationObject[constellationName] !== 'undefined'){
                     self = event;
@@ -72,8 +73,7 @@ bot.on('message', function (event) {
                 }
             });
         }
-      
-        if(event.message.text.indexOf("縮") > -1 && event.message.text.match(urlRegex)){
+        else if(event.message.text.indexOf("縮") > -1 && event.message.text.match(urlRegex)){
             self = event;
             getUrlFromString(event.message.text, function(url){
                 shortUrl_google(url, function(shortUrl){
@@ -81,20 +81,10 @@ bot.on('message', function (event) {
                 });
             });
         }
-
-        if(event.message.text.indexOf("涵涵") > -1) {
+        else if(event.message.text.indexOf("涵涵") > -1) {
             event.reply("83最愛涵涵了")
         }
-        if(event.message.text.indexOf("大勳") > -1 && event.message.text.indexOf("女朋友") > -1) {
-            event.reply("醒醒吧~大勳沒有女朋友")
-        }
     }
-//   event.reply(event.message.text).then(function (data) {
-//            // success 
-        
-//       }).catch(function (error) {
-//            // error 
-//          });
 });
 
 const app = express();
